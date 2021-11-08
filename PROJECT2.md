@@ -14,6 +14,8 @@ Bonus: Have the script evaluate if the URL is HTTP or HTTPS. If it is HTTP, it s
 URLs to start with:
 https://www.redsiege.com/
 https://www.yahoo.com/
+https://ici.radio-canada.ca/
 https://www.usbank.com/index.html
+http://neverssl.com/
 https://www.sidretail.com/
 https://www.microsoft.com/en-us
