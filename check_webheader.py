@@ -5,7 +5,7 @@ VERSION: 1.0
 AUTHOR: PH (Sgt. Hugo Stiglitz)
 STATUS: Still building
 DESCRIPTION:
-TO-DO: Update as Required
+TO-DO: create report functions
 COPYRIGHT © 2021 PH
 """
 #Imports
@@ -27,6 +27,7 @@ __version__ = "1.0"
 parser= argparse.ArgumentParser(description = 'Check web header of specific web site or list of urls and return if some headers are not present')
 parser.add_argument('-u','--url',metavar=r'http://url.com/', type = str, help = 'put url in argument')
 parser.add_argument('-l','--urllist', metavar = 'C:\ListIP.txt',type = str, help = 'give full path for file' )
+#parser.add_argument('-e', '--export', metavar = 'C:\Result.txt',type = str, help = 'give full path for export result')
 args = parser.parse_args()
 
 def readUrlFile(filepath):
@@ -79,6 +80,16 @@ def printHeaders(arrayToCheck, jsonheader, url):
         if i not in jsonheader:
             #print(f'\tthe value of {i} is {jsonheader[i]} \n')
             print(f'\tthe value {i} is not present!\n')
+
+def printHeadersToFile(filepath, data):
+    try:
+        with open (filepath, 'a') as f:
+            f.write(data)
+    except FileNotFoundError:
+        print("Wrong file or file path")
+    finally:
+        f.close
+    pass
         
 
 
@@ -89,6 +100,7 @@ if args.url:
         result = checkHeader(args.url)
         printHeaders(headersToCheck, result, args.url)
 
+
 if args.urllist:
     listWebsites = readUrlFile(args.urllist)
 
@@ -97,6 +109,11 @@ if args.urllist:
             result = checkHeader(website)
             printHeaders(headersToCheck, result, website)
         else:
-            print(f'the website {website} is not in https! we go to the next website!\n')
+            http_headerToCheck = ['Content-Security-Policy', 'X-Frame-Options']
+            result = checkHeader(website)
+            printHeaders(http_headerToCheck, result, website)
+
+
+
     
 
